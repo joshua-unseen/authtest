@@ -9,6 +9,7 @@ var fbconfig = {
   firebase.initializeApp(fbconfig);
   var DB = firebase.database();
 // Auth
+var uid = "";
 // Using a popup.
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('profile');
@@ -19,9 +20,10 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
  console.log(token);
  // The signed-in user info.
  var user = result.user;
- console.log("user id: " + user.uid);
+ uid = user.uid;
+ console.log("user id: " + uid);
 });
 
 function SetToken(aToken) {
-    DB.ref("users/" + user.uid).set({token: aToken});
+    DB.ref("users/" + uid).set({token: aToken});
 }
