@@ -24,8 +24,11 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
  console.log("user id: " + uid);
 });
 
-function SetToken(aToken) {
-    DB.ref("users/" + uid).set({headers: {"Authorization": "Bearer " + aToken}});
+firebase.auth().onAuthStateChanged(function(user){
+    console.log(DB.ref("users/" + user.uid + "/headers"));
+});
+function SetToken(newToken) {
+    DB.ref("users/" + uid).set({headers: {"Authorization": "Bearer " + newToken}});
 }
 
 /*
