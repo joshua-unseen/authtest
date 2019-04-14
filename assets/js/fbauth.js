@@ -25,5 +25,10 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 });
 
 function SetToken(aToken) {
-    DB.ref("users/" + uid).set({token: aToken});
+    DB.ref("users/" + uid).set({headers: {"Authorization": "Bearer " + aToken}});
 }
+
+/*
+    Flow: when user authenticates, check database for lifx connection parameters.
+    If none, prompt for them using bootstrap modal, store in the database.
+*/
