@@ -27,7 +27,7 @@ firebase.auth().signInWithPopup(provider).then(function (result) {
 firebase.auth().onAuthStateChanged(function (user) {
 
     DB.ref("users/" + user.uid).on("value", function (snap) {
-        if (snap.child("lifx").exists) {
+        if (snap.child("lifx").exists()) {
             console.log(snap.child("lifx/headers").val());
         }
         else {
