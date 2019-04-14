@@ -5,33 +5,39 @@ var fbconfig = {
     projectId: "bulb-project-177d8",
     storageBucket: "bulb-project-177d8.appspot.com",
     messagingSenderId: "137184575165"
-  };
-  firebase.initializeApp(fbconfig);
-  var DB = firebase.database();
+};
+firebase.initializeApp(fbconfig);
+var DB = firebase.database();
 // Auth
 var uid = "";
 // Using a popup.
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('profile');
 provider.addScope('email');
-firebase.auth().signInWithPopup(provider).then(function(result) {
- // This gives you a Google Access Token.
- var token = result.credential.accessToken;
- console.log(token);
- // The signed-in user info.
- var user = result.user;
- uid = user.uid;
- console.log("user id: " + uid);
+firebase.auth().signInWithPopup(provider).then(function (result) {
+    // This gives you a Google Access Token.
+    var token = result.credential.accessToken;
+    console.log(token);
+    // The signed-in user info.
+    var user = result.user;
+    uid = user.uid;
+    console.log("user id: " + uid);
 });
 
-firebase.auth().onAuthStateChanged(function(user){
-    DB.ref("users/" + user.uid).on("value", function(snap) {
-        console.log(snap.child("headers").val());
+firebase.auth().onAuthStateChanged(function (user) {
+
+    DB.ref("users/" + user.uid).on("value", function (snap) {
+        if (snap.child("lifx").exists) {
+            console.log(snap.child("lifx/headers").val());
+        }
+        else {
+            $("#token-input-modal").modal("show");
+        }
     });
 });
 
 function SetToken(newToken) {
-    DB.ref("users/" + uid).set({headers: {"Authorization": "Bearer " + newToken}});
+    DB.ref("users/" + uid).set({ lifx: { headers: { "Authorization": "Bearer " + newToken } } });
 }
 
 /*
