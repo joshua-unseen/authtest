@@ -25,7 +25,7 @@ firebase.auth().signInWithPopup(provider).then(function (result) {
 });
 
 var lifxHeaders = "";
-// firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function (user) {
     DB.ref("users/" + user.uid).on("value", function (snap) {
         if (snap.child("lifx").exists()) {
             lifxHeaders = snap.child("lifx/headers").val()
@@ -35,7 +35,7 @@ var lifxHeaders = "";
             $("#token-input-modal").modal("show");
         }
     });
-// });
+});
 
 function SetToken(newToken) {
     DB.ref("users/" + uid).set({ lifx: { headers: { "Authorization": "Bearer " + newToken } } });
