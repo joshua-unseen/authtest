@@ -38,6 +38,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function SetToken(newToken) {
     DB.ref("users/" + uid).set({ lifx: { headers: { "Authorization": "Bearer " + newToken } } });
+    $("#token-input-modal").modal("hide");
 }
 
 /*
