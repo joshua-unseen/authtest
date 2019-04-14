@@ -7,6 +7,7 @@ var fbconfig = {
     messagingSenderId: "137184575165"
   };
   firebase.initializeApp(fbconfig);
+  var DB = firebase.database();
 // Auth
 // Using a popup.
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -18,5 +19,5 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
  console.log(token);
  // The signed-in user info.
  var user = result.user;
- console.log(user);
+ console.log("user id: " + user.uid);
 });
