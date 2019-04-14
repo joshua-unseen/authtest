@@ -24,17 +24,18 @@ firebase.auth().signInWithPopup(provider).then(function (result) {
     console.log("user id: " + uid);
 });
 
-firebase.auth().onAuthStateChanged(function (user) {
-
+var lifxHeaders = "";
+// firebase.auth().onAuthStateChanged(function (user) {
     DB.ref("users/" + user.uid).on("value", function (snap) {
         if (snap.child("lifx").exists()) {
-            console.log(snap.child("lifx/headers").val());
+            lifxHeaders = snap.child("lifx/headers").val()
+            console.log(lifxHeaders);
         }
         else {
             $("#token-input-modal").modal("show");
         }
     });
-});
+// });
 
 function SetToken(newToken) {
     DB.ref("users/" + uid).set({ lifx: { headers: { "Authorization": "Bearer " + newToken } } });
