@@ -21,3 +21,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
  var user = result.user;
  console.log("user id: " + user.uid);
 });
+
+function SetToken(aToken) {
+    DB.ref("users/" + user.uid).set({token: aToken});
+}

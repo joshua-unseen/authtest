@@ -28,7 +28,7 @@
                 console.log(theToken);
                 $("#token-input").val("");
                 if (theToken.length) {
-                    DB.ref("users/" + user.uid).set({token: theToken});
+                    SetToken(theToken);
                 }
             });
         });
